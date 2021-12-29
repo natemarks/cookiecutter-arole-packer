@@ -1,0 +1,14 @@
+{
+  "role_name": "my_role",
+  "github_user": "natemarks",
+  "author": "Nate Marks",
+  "ansible_version": "4.4.0",
+  "molecule_version": "3.4.0",
+  "ansible_lint_version": "5.1.2",
+  "galaxy_tag_1": "example_tag1",
+  "galaxy_tag_2": "example_tag2",
+  "galaxy_tag_3": "example_tag3",
+  "vpc_id": "vpc-xxx",
+  "subnet_id": "subnet-xxx",
+  "ami_id": "ami-xxx"
+}
