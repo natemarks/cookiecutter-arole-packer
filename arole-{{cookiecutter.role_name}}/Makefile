@@ -22,9 +22,8 @@ clean-venv: ## re-create virtual env
 
 packer-publish: ## publish the AMI used to test this project
 	( \
-       . ./.env && packer build \
-			 -var-file="packer/packer_vars.hcl" \
-			  packer/aws-ubuntu-20.04.pkr.hcl; \
+       . ./.env && cd packer && packer build \
+			 -var-file="packer_vars.hcl" aws-ubuntu-20.04.pkr.hcl; \
     )
 
 clean-ansible: ## delete the $HOME/.ansible directory including galaxy-installed roles
