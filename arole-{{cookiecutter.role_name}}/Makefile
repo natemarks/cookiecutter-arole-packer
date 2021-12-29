@@ -20,6 +20,11 @@ clean-venv: ## re-create virtual env
        pip install --upgrade pip setuptools pylint flake8 pytest pytest-testinfra; \
     )
 
+packer-publish: ## publish the AMI used to test this project
+	( \
+       . ./.env && packer build packer/aws-ubuntu-20.04.pkr.hcl; \
+    )
+
 clean-ansible: ## delete the $HOME/.ansible directory including galaxy-installed roles
 	@rm -rf $${HOME}/.ansible
 
