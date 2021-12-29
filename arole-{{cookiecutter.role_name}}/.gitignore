@@ -6,7 +6,7 @@
 **/*.iml
 # ignore .env file used to source some env vars for local automation
 # like aws credentials
-.env
+/.env
 
 #python temporary files
 .pytest_cache
