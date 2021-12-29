@@ -1,7 +1,0 @@
----
-- name: Converge
-  hosts: all
-  tasks:
-    - name: "Include {{ cookiecutter.github_user }}.{{ cookiecutter.role_name }}"
-      include_role:
-        name: "{{ cookiecutter.github_user }}.{{ cookiecutter.role_name }}"

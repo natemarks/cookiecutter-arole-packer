@@ -60,17 +60,4 @@ else
 	$(info Current Branch: $(CURRENT_BRANCH), main: $(MAIN_BRANCH))
 endif
 
-run: ## run cookiecutter into a temp directory
-	TD=$$(mktemp -d); \
-	echo $$TD; \
-	( \
-       . .venv/bin/activate; \
-			 cookiecutter . -o $$TD; \
-			 RD=$$(ls $$TD); \
-			 git -C $$TD/$$RD init .; \
-			 git -C $$TD/$$RD add -A; \
-			 git -C $$TD/$$RD commit -am.; \
-			 tree $$TD; \
-    )
-
 .PHONY: static shellcheck test
