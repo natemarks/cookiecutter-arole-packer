@@ -36,17 +36,20 @@ undo_edits: ## undo staged and unstaged change. ohmyzsh alias: grhh
 rebase: git-status ## rebase current feature branch on to the default branch
 	git fetch && git rebase origin/$(DEFAULT_BRANCH)
 
-test: git-status static ## Run all project tests
+test: shellcheck pylint  ## Run all project tests
 	( \
        . .venv/bin/activate; \
        python3 -m pytest -o log_cli=true -s -v test; \
     )
 
-static: ## run  all of the static checks
+pylint: ## run  pylint against python modules
 	( \
        . .venv/bin/activate; \
        pylint test/*.py; \
     )
+
+shellcheck:
+	find . -type f -name "*.sh" -exec "shellcheck" "--format=gcc" {} \;
 
 bump: ## bump version in main branch
 ifeq ($(CURRENT_BRANCH), $(MAIN_BRANCH))

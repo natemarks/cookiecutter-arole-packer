@@ -59,3 +59,8 @@ class TestClass:  # pylint: disable=R0903
         assert env_file.contains('^export VPC_ID='+str(ccinput["vpc_id"]))
         assert env_file.contains('^export SUBNET_ID='+str(ccinput["subnet_id"]))
         assert env_file.contains('^export AMI_ID='+str(ccinput["ami_id"]))
+        #  .env file exists
+        packer_base_template = host.file(role_dir + '/packer/aws-ubuntu-20.04.pkr.hcl')
+        assert packer_base_template.exists
+        # ansible-test-arole-{{ cookiecutter.role_name }}
+        assert packer_base_template.contains('ansible-test-arole-'+str(ccinput["role_name"]))
