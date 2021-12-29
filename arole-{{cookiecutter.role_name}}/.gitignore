@@ -7,6 +7,7 @@
 # ignore .env file used to source some env vars for local automation
 # like aws credentials
 /.env
+/packer/packer_vars.hcl
 
 #python temporary files
 .pytest_cache

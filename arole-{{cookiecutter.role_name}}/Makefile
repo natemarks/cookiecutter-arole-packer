@@ -22,7 +22,9 @@ clean-venv: ## re-create virtual env
 
 packer-publish: ## publish the AMI used to test this project
 	( \
-       . ./.env && packer build packer/aws-ubuntu-20.04.pkr.hcl; \
+       . ./.env && packer build \
+			 -var-file="packer/packer_vars.hcl" \
+			  packer/aws-ubuntu-20.04.pkr.hcl; \
     )
 
 clean-ansible: ## delete the $HOME/.ansible directory including galaxy-installed roles
@@ -53,8 +55,8 @@ molecule-converge: ## Run molecule
     )
 
 shellcheck: ## execute shellcheck
-	   shellcheck templates/*.sh
-	   shellcheck templates/*.local
+	   find . -type f -name "*.sh" -exec "shellcheck" "--format=gcc" {} \;
+	   shellcheck --format=gcc templates/*.local
 
 lint: shellcheck
 
