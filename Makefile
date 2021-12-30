@@ -51,7 +51,7 @@ pylint: ## run  pylint against python modules
 shellcheck:
 	find . -type f -name "*.sh" -exec "shellcheck" "--format=gcc" {} \;
 
-bump: ## bump version in main branch
+bump: git-status ## bump version in main branch
 ifeq ($(CURRENT_BRANCH), $(MAIN_BRANCH))
 	( \
 	   . .venv/bin/activate; \

@@ -46,12 +46,7 @@ class TestClass:  # pylint: disable=R0903
         cookiecutter(
             PROJECT_DIR,
             no_input=True,
-            extra_context={
-                "role_name": ccinput["role_name"],
-                "vpc_id": ccinput["vpc_id"],
-                "subnet_id": ccinput["subnet_id"],
-                "ami_id": ccinput["ami_id"],
-                },
+            extra_context=ccinput,
         )
         #  check env file
         env_file = host.file(role_dir + '/.env')
