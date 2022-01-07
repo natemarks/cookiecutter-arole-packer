@@ -8,8 +8,8 @@ aws cloudformation wait stack-create-complete --stack-name "test-arole-{{ cookie
 SUBNET_ID="$(aws cloudformation describe-stacks --stack-name "test-arole-{{ cookiecutter.role_name }}" --output text | grep 'SubnetPublic0' | awk '{print $9}')"
 VPC_ID="$(aws cloudformation describe-stacks --stack-name "test-arole-{{ cookiecutter.role_name }}" --output text | grep 'VPCID' | awk '{print $6}')"
 
-echo "${VPC_ID}" >> packer/base-test-vars.hcl
-echo "${SUBNET_ID}" >> packer/base-test-vars.hcl
+echo "vpc_id = \"${VPC_ID}\"" >> packer/base-test-vars.hcl
+echo "subnet_id = \"${SUBNET_ID}\"" >> packer/base-test-vars.hcl
 
 echo "${VPC_ID}"
 echo "${SUBNET_ID}"
