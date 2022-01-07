@@ -6,11 +6,6 @@ variable "subnet_id" {
   type = string
 }
 
-variable "ami_id" {
-  type    = string
-  default = "default"
-}
-
 source "amazon-ebs" "ubuntu" {
   ami_name                    = "ansible-test-arole-{{ cookiecutter.role_name }}-ubuntu"
   # use force_deregister and force_delete-snapshot to overwrite the AMI

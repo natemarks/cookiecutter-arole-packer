@@ -5,7 +5,11 @@ aws cloudformation create-stack --stack-name "test-arole-{{ cookiecutter.role_na
 echo "Waiting for create-stack to finish"
 aws cloudformation wait stack-create-complete --stack-name "test-arole-{{ cookiecutter.role_name }}"
 
-echo "$(aws cloudformation describe-stacks --stack-name "test-arole-{{ cookiecutter.role_name }}" --output text | grep 'SubnetPublic0' | awk '{print $9}')"
-echo "$(aws cloudformation describe-stacks --stack-name "test-arole-{{ cookiecutter.role_name }}" --output text | grep 'VPCID' | awk '{print $6}')"
+SUBNET_ID="$(aws cloudformation describe-stacks --stack-name "test-arole-{{ cookiecutter.role_name }}" --output text | grep 'SubnetPublic0' | awk '{print $9}')"
+VPC_ID="$(aws cloudformation describe-stacks --stack-name "test-arole-{{ cookiecutter.role_name }}" --output text | grep 'VPCID' | awk '{print $6}')"
 
+echo "${VPC_ID}" >> packer/base-test-vars.hcl
+echo "${SUBNET_ID}" >> packer/base-test-vars.hcl
 
+echo "${VPC_ID}"
+echo "${SUBNET_ID}"
