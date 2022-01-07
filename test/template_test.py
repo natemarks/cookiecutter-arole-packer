@@ -55,12 +55,25 @@ class TestClass:  # pylint: disable=R0903
         assert env_file.contains('^export SUBNET_ID='+str(ccinput["subnet_id"]))
         assert env_file.contains('^export AMI_ID='+str(ccinput["ami_id"]))
         # check packer base template
-        packer_base_template = host.file(role_dir + '/packer/aws-ubuntu-20.04.pkr.hcl')
+        packer_base_template = host.file(role_dir + '/packer/base-test-images.pkr.hcl')
         assert packer_base_template.exists
         assert packer_base_template.contains('ansible-test-arole-'+str(ccinput["role_name"]))
+        assert packer_base_template.contains('  force_delete_snapshot       = true')
+        assert packer_base_template.contains('  force_deregister            = true')
         # check packer_vars.hcl
-        packer_vars = host.file(role_dir + '/packer/packer_vars.hcl')
-        assert packer_vars.exists
-        assert packer_vars.contains('vpc_id = "'+str(ccinput["vpc_id"])+'"')
-        assert packer_vars.contains('subnet_id = "'+str(ccinput["subnet_id"])+'"')
-        assert packer_vars.contains('ami_id = "'+str(ccinput["ami_id"]))
+        packer_base_vars = host.file(role_dir + '/packer/base-test-vars.hcl')
+        assert packer_base_vars.exists
+        assert packer_base_vars.contains('vpc_id    = "'+str(ccinput["vpc_id"])+'"')
+        assert packer_base_vars.contains('subnet_id = "'+str(ccinput["subnet_id"])+'"')
+        assert packer_base_vars.contains('ami_id    = "'+str(ccinput["ami_id"]))
+        # check create_test_vpc.sh
+        create_stack_sh = host.file(role_dir + '/scripts/create_test_vpc.sh')
+        assert create_stack_sh.exists
+        assert create_stack_sh.contains('aws cloudformation create-stack '
+                                        '--stack-name "test-arole-'+str(
+            ccinput["role_name"])+'"')
+        delete_stack_sh = host.file(role_dir + '/scripts/delete_test_vpc.sh')
+        assert delete_stack_sh.exists
+        assert delete_stack_sh.contains('aws cloudformation delete-stack '
+                                        '--stack-name "test-arole-'+str(
+            ccinput["role_name"])+'"')

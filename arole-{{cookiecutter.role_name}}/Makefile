@@ -20,45 +20,25 @@ clean-venv: ## re-create virtual env
        pip install --upgrade pip setuptools pylint flake8 pytest pytest-testinfra; \
     )
 
-packer-publish: ## publish the AMI used to test this project
+base-images: ## publish the AMI used to test this project
 	( \
        . ./.env && cd packer && packer build \
-			 -var-file="packer_vars.hcl" aws-ubuntu-20.04.pkr.hcl; \
+			 -var-file="base-test-vars.hcl" base-test-images.pkr.hcl; \
+    )
+
+test: ## run packer test templates
+	( \
+       . ./.env && cd packer && packer build \
+			 -var-file="base-test-vars.hcl" base-test-images.pkr.hcl; \
     )
 
 clean-ansible: ## delete the $HOME/.ansible directory including galaxy-installed roles
 	@rm -rf $${HOME}/.ansible
 
-
-roles:  clean-venv ## install ansible roles from galaxy
-	( \
-       . .venv/bin/activate; \
-       ansible-galaxy install -r ansible_requirements.yml; \
-       ansible-galaxy install git+https://github.com/natemarks/ansible-role-shell.git,$(VERSION); \
-    )
-
-molecule-test: ## Run molecule
-	( \
-	   . .venv/bin/activate; \
-	   pip install -r requirements.txt; \
-		 bash scripts/generate_env.sh; \
-	   . ./.env && molecule test --all; \
-    )
-
-molecule-converge: ## Run molecule
-	( \
-	   . .venv/bin/activate; \
-	   pip install -r requirements.txt; \
-		 bash scripts/generate_env.sh; \
-	   . ./.env && molecule converge; \
-    )
-
 shellcheck: ## execute shellcheck
 	   find . -type f -name "*.sh" -exec "shellcheck" "--format=gcc" {} \;
-	   shellcheck --format=gcc templates/*.local
 
 lint: shellcheck
-
 
 git-status: ## require status is clean so we can use undo_edits to put things back
 	@status=$$(git status --porcelain); \
