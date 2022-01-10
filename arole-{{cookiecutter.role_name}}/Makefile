@@ -7,6 +7,7 @@ THIS_FILE := $(lastword $(MAKEFILE_LIST))
 VERSION := 0.0.0
 #  use the long commit id
 COMMIT := $(shell git rev-parse HEAD)
+ROLE_DIRS := defaults files handlers meta playbook tasks templates test
 #DEFAULT_BRANCH := $(shell git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
 
 help: ## Show this help.
@@ -20,16 +21,33 @@ clean-venv: ## re-create virtual env
        pip install --upgrade pip setuptools pylint flake8 pytest pytest-testinfra; \
     )
 
-base-images: ## publish the AMI used to test this project
+
+clean_upload:
+	@rm -rf packer/upload && mkdir -p packer/upload
+	$(foreach var,$(ROLE_DIRS),cp -R $(var) packer/upload;)
+
+base-images: clean_upload ## publish the AMI used to test this project
 	( \
        . ./.env && cd packer && packer build \
 			 -var-file="base-test-vars.hcl" base-test-images.pkr.hcl; \
     )
 
-test: ## run packer test templates
+debug-base-images: clean_upload ## publish the AMI used to test this project
+	( \
+       . ./.env && cd packer && packer build -debug \
+			 -var-file="base-test-vars.hcl" base-test-images.pkr.hcl; \
+    )
+
+test: clean_upload ## run packer test templates
 	( \
        . ./.env && cd packer && packer build \
-			 -var-file="base-test-vars.hcl" base-test-images.pkr.hcl; \
+			 -var-file="base-test-vars.hcl" run-tests.pkr.hcl; \
+    )
+
+test-debug: clean_upload ## run packer test templates
+	( \
+       . ./.env && cd packer && packer build -debug \
+			 -var-file="base-test-vars.hcl" run-tests.pkr.hcl; \
     )
 
 clean-ansible: ## delete the $HOME/.ansible directory including galaxy-installed roles
@@ -66,4 +84,4 @@ else
 	$(info Current Branch: $(CURRENT_BRANCH), main: $(MAIN_BRANCH))
 endif
 
-.PHONY: static shellcheck test
+.PHONY: static shellcheck test clean_upload

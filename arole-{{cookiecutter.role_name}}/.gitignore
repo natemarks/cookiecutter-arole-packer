@@ -12,3 +12,6 @@
 #python temporary files
 .pytest_cache
 **/__pycache__
+
+**/*.pem
+packer/upload
