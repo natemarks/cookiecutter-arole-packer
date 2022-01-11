@@ -9,6 +9,9 @@ SUBNET_ID="$(aws cloudformation describe-stacks --stack-name "test-arole-{{ cook
 VPC_ID="$(aws cloudformation describe-stacks --stack-name "test-arole-{{ cookiecutter.role_name }}" --output text | grep 'VPCID' | awk '{print $6}')"
 AMI_OWNER="$(aws sts get-caller-identity --output text | awk '{print $1}')"
 
+# echo newline to file just in case
+echo "" >> packer/base-test-vars.hcl
+
 echo "ami_owner = \"${AMI_OWNER}\"" >> packer/base-test-vars.hcl
 echo "vpc_id = \"${VPC_ID}\"" >> packer/base-test-vars.hcl
 echo "subnet_id = \"${SUBNET_ID}\"" >> packer/base-test-vars.hcl
