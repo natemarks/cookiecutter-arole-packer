@@ -63,7 +63,8 @@ build {
   provisioner "shell" {
     inline = [
       "/usr/local/bin/ansible-playbook /opt/ansible/{{ cookiecutter.role_name }}/playbook/local_test.yml",
-      "sudo PATH=\"/usr/local/bin:$PATH\" python3 -m pytest -v /opt/ansible/{{ cookiecutter.role_name }}/test"
+      "sudo PATH=\"/usr/local/bin:$PATH\" python3 -m pytest -v /opt/ansible/{{ cookiecutter.role_name }}/test",
+      "sudo ansible-galaxy install -r /opt/ansible/${var.role_name}/requirements.yml"
     ]
   }
 }
