@@ -16,3 +16,4 @@
 **/*.pem
 packer/upload
 packer/base-test-vars.hcl
+test/secure_vars.yml

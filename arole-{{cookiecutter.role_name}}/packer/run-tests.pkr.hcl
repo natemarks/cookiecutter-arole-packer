@@ -60,6 +60,9 @@ build {
     ]
   }
 
+  # if you need to access secure variables in the test run, put them in test/secure_vars.yml (which is in gitignore by default)
+  # and run playbook like this
+  # "/usr/local/bin/ansible-playbook --extra-vars \"@/opt/ansible/{{ cookiecutter.role_name }}/test/secure_vars.yml\" /opt/ansible/{{ cookiecutter.role_name }}/playbook/local_test.yml"
   provisioner "shell" {
     inline = [
       "/usr/local/bin/ansible-playbook /opt/ansible/{{ cookiecutter.role_name }}/playbook/local_test.yml",

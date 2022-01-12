@@ -7,6 +7,7 @@ Cookiecutter template for ansible role projects that use packer and AWS EC2 inst
  - make command to create and publish base AMI images. the role is tested by running it on these base images
  - make commands for testing that run locally AND in pipelines
  - make commands for version bumping
+ - secure variables for test runs are in test/secure_vars.yml which is in gitignore by default. tjhe comments in the run-tests packer template have example usage
 
 
 ## Prerequisites
