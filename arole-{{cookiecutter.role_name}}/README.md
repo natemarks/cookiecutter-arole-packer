@@ -45,7 +45,7 @@ make base-images
 
 
 ## Run your first test
-This command tests the default template role on the base image. It should succeed, but it doesn't do much.
+This command tests the default template role on the base image. It should succeed, but it doesn't do much. The example test template includes an example step to install a required ansible role before runnint the role under test
 ```shell
 make test
 ```
