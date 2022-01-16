@@ -29,25 +29,25 @@ clean_upload:
 
 base-images: clean_upload ## publish the AMI used to test this project
 	( \
-       . ./.env && cd packer && packer build \
+       cd packer && packer build \
 			 -var-file="base-test-vars.hcl" base-test-images.pkr.hcl; \
     )
 
 debug-base-images: clean_upload ## publish the AMI used to test this project
 	( \
-       . ./.env && cd packer && packer build -debug \
+       cd packer && packer build -debug \
 			 -var-file="base-test-vars.hcl" base-test-images.pkr.hcl; \
     )
 
 test: clean_upload ## run packer test templates
 	( \
-       . ./.env && cd packer && packer build \
+       cd packer && packer build \
 			 -var-file="base-test-vars.hcl" run-tests.pkr.hcl; \
     )
 
 test-debug: clean_upload ## run packer test templates
 	( \
-       . ./.env && cd packer && packer build -debug \
+       cd packer && packer build -debug \
 			 -var-file="base-test-vars.hcl" run-tests.pkr.hcl; \
     )
 
