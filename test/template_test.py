@@ -48,9 +48,6 @@ class TestClass:  # pylint: disable=R0903
             no_input=True,
             extra_context=ccinput,
         )
-        #  check env file
-        env_file = host.file(role_dir + '/.env')
-        assert env_file.exists
         # check packer base template
         packer_base_template = host.file(role_dir + '/packer/base-test-images.pkr.hcl')
         assert packer_base_template.exists
