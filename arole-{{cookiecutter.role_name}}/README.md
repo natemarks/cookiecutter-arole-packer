@@ -50,7 +50,16 @@ This command tests the default template role on the base image. It should succee
 make test
 ```
 
-## Delete your VPC stack
+## [Optional] Configure your project to use secure variabels for testing
+If your role requires AWS credentials, for example, you want to store them so you cna run the tests automatically, but you DO NOT want them in the repo.  That's why the file test/secure_vars.yml is in the role project .gitignore by default.  Just create that file and put your secure variables in it:
+```shell
+cp test/example.secure_vars.yml test/secure_vars.yml
+```
+
+Finally, to use those variables in the test edit packer/run-tests.pkr.hcl and the secure_vars.yml as extra-vars in the ansible-playbook command. There is an example of the updated command in the comments of packer/run-tests.pkr.hcl.
+
+
+## [Optional] Delete your VPC stack
 ```shell
 export AWS_PROFILE=my-profile
 bash scripts/delete_test_vpc.sh
