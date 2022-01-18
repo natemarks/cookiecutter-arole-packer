@@ -1,5 +1,7 @@
 Why does this project exist?
-I create lots of ansible role projects so having cookiecutter project templates saves me time when I start new ones.
+I create lots of ansible role projects so having cookiecutter project templates saves me time when I start new ones. This template is used for testing on full multi-user desktop environment EC2 hosts.  If you just need some simple testing using docker and molecule, consider using this template instead:
+https://github.com/natemarks/cookiecutter-ansible-role
+
 
 Why does it test with EC2 instances using packer?
 This project is a cookiecutter template for ansible role projects that test the role using packer to spin up EC2 instances. It is a slower, but more flexible alternative to using molecule and docker for testing. It's idea for role sthat need to be tested in complex, multi-user instances like desktop configuration roles. I've never been interested in building out a whole desktop environment in docker, so this project is my solution.
