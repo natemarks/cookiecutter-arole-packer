@@ -1,0 +1,5 @@
+# requirements.yml
+---
+- name: {{ cookiecutter.github_user}}.{{ cookiecutter.role_name }}
+  src: https://github.com/{{ cookiecutter.github_user}}/arole-{{ cookiecutter.role_name }}
+  version: v0.0.0

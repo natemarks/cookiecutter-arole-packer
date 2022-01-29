@@ -3,4 +3,4 @@
 - hosts: localhost
   become: false
   roles:
-    - /opt/ansible/{{ cookiecutter.role_name }}
+    - {{ cookiecutter.github_user }}.{{ cookiecutter.role_name }}
