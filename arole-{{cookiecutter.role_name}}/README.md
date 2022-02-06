@@ -1,4 +1,4 @@
-# {{ cookiecutter.github_user }}/{{ cookiecutter.role_name }}
+# {{ cookiecutter.github_user }}.{{ cookiecutter.role_name }}
 Dear Role Developer,
 
 When you create the project these are the things you want to do right away. The goal it to get the 'make test' command running.
