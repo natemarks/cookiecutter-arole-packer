@@ -2,7 +2,8 @@
   "role_name": "my_role",
   "github_user": "natemarks",
   "author": "Nate Marks",
-  "ansible_version": "4.10.0",
+  "ansible_version": "5.3.0",
+  "ansible_lint_version": "5.3.2",
   "galaxy_tag_1": "example_tag1",
   "galaxy_tag_2": "example_tag2",
   "galaxy_tag_3": "example_tag3"
