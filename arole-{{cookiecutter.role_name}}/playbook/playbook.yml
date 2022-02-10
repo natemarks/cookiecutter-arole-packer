@@ -3,4 +3,4 @@
 - hosts: localhost
   become: false
   roles:
-    - role: /opt/ansible/{{ cookiecutter.role_name }}
+    - role: $ROLE_DIR # role dir comes from the pipeline run_playbook script ROLE_DIR=$(pwd)

@@ -66,6 +66,7 @@ build {
   provisioner "shell" {
     inline = [
       "sudo ansible-galaxy install -r /opt/ansible/${var.role_name}/requirements.yml",
+      "export ROLE_DIR=/opt/ansible/${var.role_name}",
       "/usr/local/bin/ansible-playbook /opt/ansible/${var.role_name}/playbook/playbook.yml",
       "PATH=\"/usr/local/bin:$PATH\" python3 -m pytest -v /opt/ansible/${var.role_name}/test"
     ]

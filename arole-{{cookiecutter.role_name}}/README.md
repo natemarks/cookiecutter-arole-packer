@@ -74,5 +74,5 @@ bash scripts/delete_test_vpc.sh
 git clone https://github.com/natemarks/arole-{{ cookiecutter.role_name }}.git
 cd arole-{{ cookiecutter.role_name }}
 sudo apt install -y curl 
-bash -c 'curl "https://raw.githubusercontent.com/natemarks/pipeline-scripts/v0.0.31/scripts/run_playbook.sh" | bash -s --  -p  playbook' 
+bash -c 'curl "https://raw.githubusercontent.com/natemarks/pipeline-scripts/v0.0.33/scripts/run_playbook.sh" | bash -s --  -p  playbook' 
 ```
