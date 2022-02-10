@@ -25,7 +25,7 @@ clean-venv: ## re-create virtual env
 clean_upload:
 	@rm -rf packer/upload && mkdir -p packer/upload
 	$(foreach var,$(ROLE_DIRS),cp -R $(var) packer/upload;)
-	cp requirements.yml packer/upload
+	-cp requirements.yml packer/upload
 
 base-images: clean_upload ## publish the AMI used to test this project
 	( \
