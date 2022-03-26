@@ -10,6 +10,12 @@ COMMIT := $(shell git rev-parse HEAD)
 ROLE_DIRS := defaults files handlers meta playbook tasks templates test
 #DEFAULT_BRANCH := $(shell git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
 
+
+EC2_IP := $(shell aws ec2 describe-instances \
+  --filters "Name=tag:Name,Values=Packer Builder" "Name=instance-state-name,Values=running" \
+  --query 'Reservations[*].Instances[*].[PublicIpAddress]' \
+  --output text | egrep  -v 'None')
+
 help: ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
@@ -50,6 +56,9 @@ test-debug: clean_upload ## run packer test templates
        cd packer && packer build -debug \
 			 -var-file="base-test-vars.hcl" run-tests.pkr.hcl; \
     )
+
+test-debug-ssh: ## ssh to the debug host
+	ssh -i ./packer/ec2_ubuntu.pem ubuntu@$(EC2_IP)
 
 clean-ansible: ## delete the $HOME/.ansible directory including galaxy-installed roles
 	@rm -rf $${HOME}/.ansible
